@@ -90,7 +90,15 @@ const Reserve = () => {
             <FormField control={form.control} name="party_size" render={({ field }) => (
               <FormItem>
                 <FormLabel>Party size</FormLabel>
-                <FormControl><Input type="number" min={1} max={20} {...field} /></FormControl>
+                <FormControl>
+                  <Input
+                    type="number"
+                    min={1}
+                    max={20}
+                    value={field.value ?? ""}
+                    onChange={(e) => field.onChange(e.target.value === "" ? undefined : Number(e.target.value))}
+                  />
+                </FormControl>
                 <FormMessage />
               </FormItem>
             )} />
