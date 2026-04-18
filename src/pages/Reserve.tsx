@@ -21,8 +21,8 @@ const schema = z.object({
   name: z.string().trim().min(2, "Required").max(100),
   email: z.string().trim().email("Invalid email").max(255),
   phone: z.string().trim().min(5, "Required").max(30),
-  party_size: z.coerce.number().int().min(1).max(20),
-  reservation_date: z.date({ required_error: "Pick a date" }),
+  party_size: z.number({ message: "Required" }).int().min(1).max(20),
+  reservation_date: z.date({ message: "Pick a date" }),
   reservation_time: z.string().min(1, "Pick a time"),
   notes: z.string().max(500).optional(),
 });
