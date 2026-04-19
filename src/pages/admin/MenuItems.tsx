@@ -54,14 +54,19 @@ const MenuItemsAdmin = () => {
 
   const upload = async (file: File) => {
     setUploading(true);
-    const ext = file.name.split(".").pop();
-    const path = `${crypto.randomUUID()}.${ext}`;
-    const { error } = await supabase.storage.from("menu-images").upload(path, file);
-    if (error) { setUploading(false); return toast.error(error.message); }
-    const { data } = supabase.storage.from("menu-images").getPublicUrl(path);
-    setForm((f) => ({ ...f, image_url: data.publicUrl }));
-    setUploading(false);
-    toast.success("Image uploaded");
+    try {
+      const fd = new FormData();
+      fd.append("file", file);
+      const { data, error } = await supabase.functions.invoke("upload-to-r2", { body: fd });
+      if (error) throw error;
+      if (!data?.url) throw new Error("Upload failed");
+      setForm((f) => ({ ...f, image_url: data.url }));
+      toast.success("Image uploaded to R2");
+    } catch (e: any) {
+      toast.error(e?.message || "Upload failed");
+    } finally {
+      setUploading(false);
+    }
   };
 
   const save = async () => {
