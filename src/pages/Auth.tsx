@@ -60,6 +60,21 @@ const AuthPage = () => {
     toast.success("Account created", { description: "You can now sign in." });
   };
 
+  const onGoogle = async () => {
+    setLoading(true);
+    const result = await lovable.auth.signInWithOAuth("google", {
+      redirect_uri: `${window.location.origin}${redirect}`,
+    });
+    if (result.error) {
+      setLoading(false);
+      return toast.error("Google sign-in failed", { description: result.error.message });
+    }
+    if (result.redirected) return;
+    setLoading(false);
+    toast.success("Welcome");
+    navigate(redirect);
+  };
+
   return (
     <div className="container-narrow py-20 max-w-md">
       <div className="text-center mb-10">
