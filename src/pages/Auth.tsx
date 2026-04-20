@@ -9,6 +9,7 @@ import { Input } from "@/components/ui/input";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { supabase } from "@/integrations/supabase/client";
+import { lovable } from "@/integrations/lovable";
 import { toast } from "sonner";
 
 const signInSchema = z.object({
@@ -59,6 +60,21 @@ const AuthPage = () => {
     toast.success("Account created", { description: "You can now sign in." });
   };
 
+  const onGoogle = async () => {
+    setLoading(true);
+    const result = await lovable.auth.signInWithOAuth("google", {
+      redirect_uri: `${window.location.origin}${redirect}`,
+    });
+    if (result.error) {
+      setLoading(false);
+      return toast.error("Google sign-in failed", { description: result.error.message });
+    }
+    if (result.redirected) return;
+    setLoading(false);
+    toast.success("Welcome");
+    navigate(redirect);
+  };
+
   return (
     <div className="container-narrow py-20 max-w-md">
       <div className="text-center mb-10">
@@ -67,6 +83,22 @@ const AuthPage = () => {
       </div>
 
       <div className="bg-card border border-border/60 p-8 shadow-elegant">
+        <Button
+          type="button"
+          variant="outline"
+          onClick={onGoogle}
+          disabled={loading}
+          className="w-full mb-4"
+        >
+          <svg className="mr-2 h-4 w-4" viewBox="0 0 24 24" aria-hidden="true">
+            <path fill="#EA4335" d="M12 10.2v3.9h5.5c-.2 1.4-1.7 4.1-5.5 4.1-3.3 0-6-2.7-6-6.1s2.7-6.1 6-6.1c1.9 0 3.2.8 3.9 1.5l2.7-2.6C17 3.3 14.7 2.3 12 2.3 6.9 2.3 2.7 6.5 2.7 11.6S6.9 20.9 12 20.9c6.9 0 9.5-4.8 9.5-7.4 0-.5 0-.9-.1-1.3H12z"/>
+          </svg>
+          Continue with Google
+        </Button>
+        <div className="relative my-4">
+          <div className="absolute inset-0 flex items-center"><span className="w-full border-t border-border/60" /></div>
+          <div className="relative flex justify-center text-xs"><span className="bg-card px-2 text-muted-foreground">or</span></div>
+        </div>
         <Tabs defaultValue="signin">
           <TabsList className="grid w-full grid-cols-2 mb-6">
             <TabsTrigger value="signin">Sign in</TabsTrigger>
