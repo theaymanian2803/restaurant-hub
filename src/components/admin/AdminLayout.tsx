@@ -1,5 +1,5 @@
 import { Link, NavLink, Outlet, useNavigate } from "react-router-dom";
-import { LayoutDashboard, UtensilsCrossed, ListTree, CalendarCheck, ShoppingBag, LogOut, Home } from "lucide-react";
+import { LayoutDashboard, UtensilsCrossed, ListTree, CalendarCheck, ShoppingBag, LogOut, Home, Sparkles, LayoutTemplate, Images, Quote, PanelBottom } from "lucide-react";
 import { useAuth } from "@/hooks/useAuth";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
@@ -10,6 +10,14 @@ const links = [
   { to: "/admin/menu", label: "Menu items", icon: UtensilsCrossed, end: false },
   { to: "/admin/reservations", label: "Reservations", icon: CalendarCheck, end: false },
   { to: "/admin/orders", label: "Orders", icon: ShoppingBag, end: false },
+];
+
+const landingLinks = [
+  { to: "/admin/landing/hero", label: "Hero", icon: Sparkles },
+  { to: "/admin/landing/features", label: "Features", icon: LayoutTemplate },
+  { to: "/admin/landing/gallery", label: "Gallery", icon: Images },
+  { to: "/admin/landing/testimonials", label: "Testimonials", icon: Quote },
+  { to: "/admin/landing/footer", label: "Footer & contact", icon: PanelBottom },
 ];
 
 export function AdminLayout() {
