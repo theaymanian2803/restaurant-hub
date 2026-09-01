@@ -19,6 +19,11 @@ import Categories from "./pages/admin/Categories";
 import MenuItems from "./pages/admin/MenuItems";
 import Reservations from "./pages/admin/Reservations";
 import Orders from "./pages/admin/Orders";
+import LandingHero from "./pages/admin/LandingHero";
+import LandingFeatures from "./pages/admin/LandingFeatures";
+import LandingGallery from "./pages/admin/LandingGallery";
+import LandingTestimonials from "./pages/admin/LandingTestimonials";
+import LandingFooter from "./pages/admin/LandingFooter";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -45,6 +50,11 @@ const App = () => (
             <Route path="menu" element={<MenuItems />} />
             <Route path="reservations" element={<Reservations />} />
             <Route path="orders" element={<Orders />} />
+            <Route path="landing/hero" element={<LandingHero />} />
+            <Route path="landing/features" element={<LandingFeatures />} />
+            <Route path="landing/gallery" element={<LandingGallery />} />
+            <Route path="landing/testimonials" element={<LandingTestimonials />} />
+            <Route path="landing/footer" element={<LandingFooter />} />
           </Route>
           <Route path="*" element={<NotFound />} />
         </Routes>
