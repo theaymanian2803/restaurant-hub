@@ -1,6 +1,10 @@
 import { Link } from "react-router-dom";
+import { Skeleton } from "@/components/ui/skeleton";
+import { useLandingSection } from "@/hooks/useLandingSection";
 
 export function Footer() {
+  const { data, loading } = useLandingSection("footer");
+
   return (
     <footer className="border-t border-border/40 mt-24">
       <div className="container-narrow py-16 grid gap-12 md:grid-cols-4">
@@ -12,20 +16,38 @@ export function Footer() {
         </div>
         <div>
           <h4 className="text-xs uppercase tracking-[0.2em] text-primary mb-4">Visit</h4>
-          <p className="text-sm text-muted-foreground leading-relaxed">
-            12 Via Dante<br />Milan, IT 20121<br />+39 02 1234 5678
-          </p>
+          {loading ? (
+            <Skeleton className="h-16 w-full" />
+          ) : (
+            <p className="text-sm text-muted-foreground leading-relaxed">
+              {data.address}
+              <br />
+              <a href={`tel:${data.phone}`} className="hover:text-primary transition-colors">{data.phone}</a>
+              <br />
+              <a href={`mailto:${data.email}`} className="hover:text-primary transition-colors">{data.email}</a>
+            </p>
+          )}
         </div>
         <div>
-          <h4 className="text-xs uppercase tracking-[0.2em] text-primary mb-4">Hours</h4>
-          <p className="text-sm text-muted-foreground leading-relaxed">
-            Tue – Thu · 18 — 23<br />Fri – Sat · 18 — 24<br />Sun · 12 — 16
-          </p>
+          <h4 className="text-xs uppercase tracking-[0.2em] text-primary mb-4">Follow</h4>
+          {loading ? (
+            <Skeleton className="h-16 w-full" />
+          ) : (
+            <ul className="text-sm text-muted-foreground leading-relaxed space-y-1">
+              {data.socials.map((s) => (
+                <li key={s.id}>
+                  <a href={s.url} target="_blank" rel="noreferrer" className="hover:text-primary transition-colors">
+                    {s.label}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          )}
         </div>
       </div>
       <div className="border-t border-border/40">
         <div className="container-narrow py-6 flex flex-col md:flex-row justify-between gap-3 text-xs text-muted-foreground">
-          <p>© {new Date().getFullYear()} Saveur. All rights reserved.</p>
+          <p>© {new Date().getFullYear()} {data.copyright}</p>
           <Link to="/admin" className="hover:text-primary transition-colors">Staff</Link>
         </div>
       </div>
