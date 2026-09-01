@@ -54,13 +54,51 @@ export type FooterContent = {
   socials: { id: string; label: string; url: string }[];
 };
 
+export type HoursContent = {
+  eyebrow: string;
+  heading: string;
+  note: string;
+  items: { id: string; days: string; time: string }[];
+};
+
+export type LocationContent = {
+  eyebrow: string;
+  heading: string;
+  address: string;
+  mapEmbedUrl: string;
+  mapsUrl: string;
+  image: string;
+  parkingNote: string;
+  directions: { id: string; mode: string; detail: string }[];
+};
+
+export type StoryContent = {
+  eyebrow: string;
+  heading: string;
+  image: string;
+  quote: string;
+  quoteAuthor: string;
+  paragraphs: { id: string; text: string }[];
+};
+
+export type FaqContent = {
+  eyebrow: string;
+  heading: string;
+  items: { id: string; question: string; answer: string }[];
+};
+
 export type LandingSections = {
   hero: HeroContent;
   features: FeaturesContent;
   gallery: GalleryContent;
   testimonials: TestimonialsContent;
   footer: FooterContent;
+  hours: HoursContent;
+  location: LocationContent;
+  story: StoryContent;
+  faq: FaqContent;
 };
+
 
 export const landingDefaults: LandingSections = {
   hero: {
