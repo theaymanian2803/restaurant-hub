@@ -1,0 +1,17 @@
+name = "saveur-api"
+main = "src/index.ts"
+compatibility_date = "2024-09-23"
+compatibility_flags = ["nodejs_compat"]
+
+[vars]
+# Comma-separated list of allowed site origins (your preview + published URLs)
+ALLOWED_ORIGINS = "http://localhost:8080,https://id-preview--6816e0a0-8a7d-452c-96a0-5b84d5b19278.lovable.app"
+# Public base URL of your R2 bucket (same value as R2_PUBLIC_URL)
+R2_PUBLIC_URL = ""
+
+[[r2_buckets]]
+binding = "BUCKET"
+bucket_name = "REPLACE_WITH_YOUR_R2_BUCKET_NAME"
+
+# Secrets (set with `wrangler secret put NAME`):
+#   TURSO_DATABASE_URL, TURSO_AUTH_TOKEN, JWT_SECRET
